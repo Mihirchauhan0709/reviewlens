@@ -1,0 +1,7 @@
+# Day 1: scraping + storage
+apify-client>=1.7.0
+
+# Pinned later in the build:
+# openai>=1.50.0           # day 2
+# pandas>=2.2.0            # day 3
+# streamlit>=1.38.0        # day 3
