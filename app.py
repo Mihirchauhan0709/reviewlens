@@ -47,14 +47,14 @@ st.set_page_config(
 
 # Tiny CSS polish. Streamlit defaults look like a homework assignment;
 # tightening the spacing + a single accent color makes it look intentional.
-# Uses CSS variables that adapt to Streamlit's light/dark theme.
+# Color palette is SharkNinja's brand red (Apple Blossom) for emphasis.
 st.markdown("""
 <style>
     .block-container { padding-top: 2rem; padding-bottom: 3rem; }
     h1 { padding-bottom: 0; }
     .highlight-card {
-        background: rgba(230, 57, 70, 0.08);
-        border-left: 4px solid #e63946;
+        background: rgba(176, 73, 73, 0.10);
+        border-left: 4px solid #B04949;
         padding: 1.25rem 1.5rem;
         border-radius: 4px;
         margin-bottom: 1.5rem;
@@ -71,10 +71,14 @@ st.markdown("""
 
 
 # --- chart styling --------------------------------------------------------
-# One consistent color story across the whole dashboard.
-ACCENT_RED  = "#e63946"        # bad / safety / severity
-ACCENT_GREY = "#6c757d"        # neutral
-GRID_COLOR  = "rgba(128, 128, 128, 0.18)"
+# SharkNinja brand palette (from official brand guidelines via Brandfetch).
+# Apple Blossom red is the brand accent; Cod Gray is the dark surface;
+# White is the light text. We use a muted neutral for non-priority data
+# so the brand red carries the priority signal.
+ACCENT_RED  = "#B04949"        # Apple Blossom — SharkNinja brand red
+ACCENT_DARK = "#141414"        # Cod Gray — SharkNinja brand dark
+ACCENT_GREY = "#8a8a8a"        # neutral for non-priority data
+GRID_COLOR  = "rgba(255, 255, 255, 0.08)"
 
 
 def style_chart(fig: go.Figure, height: int = 300, show_legend: bool = False) -> go.Figure:
@@ -418,7 +422,7 @@ elif page == "SKU Deep Dive":
             orientation="h",
             marker=dict(
                 color=decomp_df["Contribution"],
-                colorscale=[[0, "#f4a3aa"], [1, ACCENT_RED]],
+                colorscale=[[0, "#d49090"], [1, ACCENT_RED]],
                 line=dict(width=0),
             ),
             customdata=decomp_df[["Value", "Weight"]].values,
@@ -510,12 +514,12 @@ elif page == "SKU Deep Dive":
             for s in order if sev_counts.get(s, 0) > 0
         ]
         sev_df = pd.DataFrame(sev_data)
-        # Graduated red: darker for more severe
+        # Graduated brand-aligned palette: critical = deepest, low = neutral
         severity_colors = {
-            "critical": "#9d1c2a",
-            "high":     "#e63946",
-            "medium":   "#f4a261",
-            "low":      "#a8a8a8",
+            "critical": "#7a2828",     # deep brand red
+            "high":     "#B04949",     # Apple Blossom (SharkNinja brand red)
+            "medium":   "#d49090",     # muted brand red
+            "low":      "#8a8a8a",     # neutral grey
         }
         fig = px.bar(
             sev_df,
@@ -554,7 +558,7 @@ elif page == "SKU Deep Dive":
                 mode="lines",
                 line=dict(color=ACCENT_RED, width=2.5),
                 fill="tozeroy",
-                fillcolor="rgba(230, 57, 70, 0.12)",
+                fillcolor="rgba(176, 73, 73, 0.15)",
                 hovertemplate="<b>%{x|%b %d, %Y}</b><br>%{y:.1f}% complaint rate<extra></extra>",
                 name="",
             ))
