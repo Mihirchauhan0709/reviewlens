@@ -1,16 +1,19 @@
 """Apify-based Amazon review scraper.
 
-Calls web_wanderer/amazon-reviews-extractor once per SKU, normalizes the output
-to our review schema, and inserts into SQLite. Each SKU is independent so a
-single failure doesn't kill the whole run.
+Strategy: per SKU, make four Actor calls — one broad call for context, then three
+targeted calls for 1★, 2★, and 3★ reviews. The single-rating filter is the only
+star-filtering parameter on this Actor that reliably works; the multi-star `stars`
+array silently collapses to mostly 5★ output (verified by empirical run).
+
+We deliberately oversample low-star reviews because that's where defect signal
+lives. The dashboard later normalizes back to true complaint rate by weighting
+each star bucket appropriately.
+
+Cost: ~40 actor calls + ~2000 reviews => ~$2.
 
 Usage:
     export APIFY_TOKEN=apify_api_...
     python -m src.scrape
-
-Cost expectation: ~$0.001 per review + ~$0.00002 per Actor start.
-At 500 reviews/SKU * 10 SKUs = 5,000 reviews max => ~$5.
-At 150 reviews/SKU average = 1,500 reviews => ~$1.50.
 """
 
 from __future__ import annotations
@@ -28,28 +31,26 @@ from src.storage import init_db, insert_reviews, review_count_by_sku, upsert_sku
 
 ACTOR_ID = "web_wanderer/amazon-reviews-extractor"
 
-# Target ~150 reviews per SKU, balanced across star ratings.
-#
-# Why per-star stratification matters: Amazon ranks "helpful" or "recent" reviews
-# globally, and on a highly-rated SKU that means 95% of returned reviews are 5-star.
-# That under-samples exactly the reviews the defect pipeline needs.
-#
-# By requesting each star bucket separately and capping pages per bucket, we get
-# guaranteed coverage of 1- and 2-star reviews even on a 4.8-star product. Yield
-# is approximate: SKUs with low complaint volume will return less than the ceiling
-# for low-star buckets, which is fine and expected.
-#
-# Per-bucket ceiling = limit * ~10 reviews/page. limit=3 => ~30/bucket => ~150/SKU.
-DEFAULT_SCRAPE_CONFIG: dict[str, Any] = {
-    "stars": ["five_star", "four_star", "three_star", "two_star", "one_star"],
-    "limit": 3,                  # ~30 reviews per star bucket, ~150 per SKU
-    "sort": "recent",            # surface trends, not historical noise
-    "avp_reviews": True,         # verified purchase only
-    "include_variants": True,    # roll in variant reviews so the SKU view is complete
-    "personal_data": False,      # never scrape personal data
+# Base config used for every call. Per-call overrides specify the rating filter.
+BASE_CONFIG: dict[str, Any] = {
+    "sort": "recent",
+    "include_variants": True,
+    "personal_data": False,
     "region": "amazon.com",
     "language": "en",
+    "limit": 10,                 # max 10 pages, lets Amazon's own cap kick in
+    # Notably NOT setting avp_reviews: many real complaints come from unverified
+    # purchasers (gifts, returns, third-party sellers). Filtering here loses signal.
 }
+
+# Per-rating calls. Oversample 1/2/3 ★ because that's where complaints live.
+# "all" gives us a broad sample that's mostly 4-5★, used for true-rate normalization.
+RATING_CALLS = [
+    ("all", {**BASE_CONFIG, "rating": "all"}),
+    ("one_star", {**BASE_CONFIG, "rating": "one_star"}),
+    ("two_star", {**BASE_CONFIG, "rating": "two_star"}),
+    ("three_star", {**BASE_CONFIG, "rating": "three_star"}),
+]
 
 logging.basicConfig(
     level=logging.INFO,
@@ -59,16 +60,9 @@ log = logging.getLogger("reviewlens.scrape")
 
 
 def normalize_review(raw: dict[str, Any], asin: str) -> dict[str, Any]:
-    """Map an Apify output row into our reviews-table column schema.
-
-    The Apify output is generous (aspects, images, profile data, etc.). We keep
-    only the fields we'll actually use, and we normalize types: booleans become
-    0/1 for SQLite, missing fields become None.
-    """
+    """Map an Apify output row into our reviews-table column schema."""
     return {
         "review_id": raw.get("reviewId"),
-        # productAsin from the scraper is the canonical ASIN; fall back to the
-        # SKU's catalog ASIN if missing.
         "asin": raw.get("productAsin") or asin,
         "rating": int(raw["rating"]) if raw.get("rating") is not None else None,
         "review_date": raw.get("reviewDate"),
@@ -83,25 +77,38 @@ def normalize_review(raw: dict[str, Any], asin: str) -> dict[str, Any]:
     }
 
 
-def scrape_sku(client: ApifyClient, asin: str, display_name: str) -> list[dict[str, Any]]:
-    """Run one Actor call for a single SKU. Returns normalized review rows."""
-    log.info("Scraping %s (%s)...", display_name, asin)
-
-    run_input = {**DEFAULT_SCRAPE_CONFIG, "products": [asin]}
+def scrape_one_call(
+    client: ApifyClient, asin: str, label: str, config: dict[str, Any]
+) -> list[dict]:
+    """Run one Actor call for a single SKU + rating filter."""
+    run_input = {**config, "products": [asin]}
     run = client.actor(ACTOR_ID).call(run_input=run_input)
 
     if run is None or run.get("status") != "SUCCEEDED":
-        log.error("Run for %s did not succeed: %s", asin, run)
+        log.error("    [%s] run did not succeed: %s", label, run)
         return []
 
-    dataset_id = run["defaultDatasetId"]
-    items = list(client.dataset(dataset_id).iterate_items())
-    log.info("  -> %d raw items returned", len(items))
-
-    # Filter out items missing the bare minimum we need.
-    rows = [normalize_review(item, asin) for item in items if item.get("reviewId")]
-    log.info("  -> %d valid rows after normalization", len(rows))
+    items = list(client.dataset(run["defaultDatasetId"]).iterate_items())
+    rows = [normalize_review(i, asin) for i in items if i.get("reviewId")]
+    log.info("    [%s] %d raw -> %d valid", label, len(items), len(rows))
     return rows
+
+
+def scrape_sku(client: ApifyClient, asin: str, display_name: str) -> int:
+    """Run all rating calls for one SKU. Returns count of new rows inserted."""
+    log.info("Scraping %s (%s)...", display_name, asin)
+    all_rows: list[dict] = []
+    for label, config in RATING_CALLS:
+        try:
+            rows = scrape_one_call(client, asin, label, config)
+            all_rows.extend(rows)
+        except Exception as exc:
+            log.exception("    [%s] failed: %s", label, exc)
+        time.sleep(0.5)  # tiny gap between calls
+    # Insert at the end — insert_reviews uses INSERT OR IGNORE so duplicates
+    # (same review appearing in both the "all" call and a star-specific call)
+    # are silently deduplicated by review_id.
+    return insert_reviews(all_rows)
 
 
 def main() -> None:
@@ -120,18 +127,14 @@ def main() -> None:
 
     for sku in skus:
         try:
-            rows = scrape_sku(client, sku["asin"], sku["display_name"])
-            inserted = insert_reviews(rows)
-            log.info("  -> inserted %d new reviews", inserted)
+            inserted = scrape_sku(client, sku["asin"], sku["display_name"])
+            log.info("  => %d new reviews for %s", inserted, sku["display_name"])
             total_inserted += inserted
         except Exception as exc:
             log.exception("Failed on %s: %s", sku["display_name"], exc)
             failures.append(sku["display_name"])
-        # Tiny pause between runs; the Actor handles its own rate limiting but
-        # this keeps the Apify dashboard readable if a human is watching.
-        time.sleep(1)
 
-    log.info("=" * 60)
+    log.info("=" * 64)
     log.info("Done. Inserted %d new reviews total.", total_inserted)
     if failures:
         log.warning("Failed SKUs (retry individually): %s", failures)

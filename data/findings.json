@@ -1,0 +1,1174 @@
+{
+  "generated_at": "2026-05-16T15:55:36",
+  "n_skus": 10,
+  "category_baseline": {
+    "ice_cream_maker": 0.2207041847041847,
+    "air_fryer": 0.21894687047139072,
+    "multi_cooker": 0.22972109337203675,
+    "cordless_stick": 0.24754589371980676,
+    "upright_vacuum": 0.3391122148584351,
+    "coffee_maker": 0.23490024468285342,
+    "robot_vacuum": 0.32839646464646466,
+    "blender": 0.22373363442113445,
+    "steam_mop": 0.2510753246753247
+  },
+  "findings": [
+    {
+      "asin": "B08QXB9BH5",
+      "brand": "Ninja",
+      "category": "ice_cream_maker",
+      "display_name": "Ninja Creami",
+      "n_reviews_scraped": 200,
+      "true_complaint_rate": {
+        "value": 0.2207041847041847,
+        "raw_rate": 0.575,
+        "bucket_n": {
+          "1": 99,
+          "2": 21,
+          "3": 15,
+          "4": 9,
+          "5": 51
+        },
+        "bucket_rate": {
+          "1": 0.808,
+          "2": 0.81,
+          "3": 0.8,
+          "4": 0.667,
+          "5": 0.0
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 12,
+          "high": 51,
+          "critical": 51,
+          "low": 1
+        },
+        "score": 0.7965217391304348,
+        "n_complaints": 115
+      },
+      "recency": {
+        "recent_rate": 0.125,
+        "prior_rate": 0.4166666666666667,
+        "delta_pp": null,
+        "n_recent": 8,
+        "n_prior": 12,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.7105263157894737,
+      "safety_share": 0.34782608695652173,
+      "top_defects": [
+        {
+          "value": "safety_concern",
+          "count": 40,
+          "share": 0.34782608695652173
+        },
+        {
+          "value": "design_flaw",
+          "count": 20,
+          "share": 0.17391304347826086
+        },
+        {
+          "value": "durability",
+          "count": 17,
+          "share": 0.14782608695652175
+        },
+        {
+          "value": "missing_parts",
+          "count": 16,
+          "share": 0.1391304347826087
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 13,
+          "share": 0.11304347826086956
+        }
+      ],
+      "top_components": [
+        {
+          "value": "blade",
+          "count": 28,
+          "share": 0.25688073394495414
+        },
+        {
+          "value": "lid",
+          "count": 14,
+          "share": 0.12844036697247707
+        },
+        {
+          "value": "machine",
+          "count": 6,
+          "share": 0.05504587155963303
+        },
+        {
+          "value": "container",
+          "count": 6,
+          "share": 0.05504587155963303
+        },
+        {
+          "value": "paddle",
+          "count": 5,
+          "share": 0.045871559633027525
+        }
+      ],
+      "representative_summaries": [
+        "Paddle repeatedly fell off during use; lid burned and paddle melted, indicating safety issues.",
+        "Product started smoking and malfunctioned after less than a month of use, posing a safety risk.",
+        "Catastrophic failure with smoke and burnt blade attachment after making only 7 pints.",
+        "Machine failed after five months, making high-pitched noise and trapping components; emergency stop feature absent.",
+        "Machine emitted smoke and set off fire alarm after 30 uses; blade broke and posed safety risk."
+      ],
+      "risk": {
+        "score": 0.5983058060170189,
+        "components": {
+          "true_complaint_rate": 0.4414083694083694,
+          "severity_score": 0.7965217391304348,
+          "safety_share": 1.0,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.7105263157894737
+        }
+      }
+    },
+    {
+      "asin": "B089TQWJKK",
+      "brand": "Ninja",
+      "category": "air_fryer",
+      "display_name": "Ninja Air Fryer",
+      "n_reviews_scraped": 162,
+      "true_complaint_rate": {
+        "value": 0.21894687047139072,
+        "raw_rate": 0.41358024691358025,
+        "bucket_n": {
+          "1": 49,
+          "2": 18,
+          "3": 12,
+          "4": 11,
+          "5": 67
+        },
+        "bucket_rate": {
+          "1": 0.694,
+          "2": 0.833,
+          "3": 0.833,
+          "4": 0.455,
+          "5": 0.045
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 25,
+          "high": 19,
+          "critical": 22,
+          "low": 1
+        },
+        "score": 0.6776119402985075,
+        "n_complaints": 67
+      },
+      "recency": {
+        "recent_rate": 0.47368421052631576,
+        "prior_rate": 0.3448275862068966,
+        "delta_pp": null,
+        "n_recent": 19,
+        "n_prior": 29,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.5428571428571428,
+      "safety_share": 0.22388059701492538,
+      "top_defects": [
+        {
+          "value": "durability",
+          "count": 25,
+          "share": 0.373134328358209
+        },
+        {
+          "value": "safety_concern",
+          "count": 15,
+          "share": 0.22388059701492538
+        },
+        {
+          "value": "design_flaw",
+          "count": 13,
+          "share": 0.19402985074626866
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 8,
+          "share": 0.11940298507462686
+        },
+        {
+          "value": "performance_degradation",
+          "count": 5,
+          "share": 0.07462686567164178
+        }
+      ],
+      "top_components": [
+        {
+          "value": "handle",
+          "count": 6,
+          "share": 0.11764705882352941
+        },
+        {
+          "value": "basket",
+          "count": 6,
+          "share": 0.11764705882352941
+        },
+        {
+          "value": "baskets",
+          "count": 5,
+          "share": 0.09803921568627451
+        },
+        {
+          "value": "coating",
+          "count": 2,
+          "share": 0.0392156862745098
+        },
+        {
+          "value": "heating element",
+          "count": 2,
+          "share": 0.0392156862745098
+        }
+      ],
+      "representative_summaries": [
+        "Olor a quemado y rejilla derretida en el primer uso; riesgo de seguridad el\u00e9ctrica.",
+        "Product arrived non-functional; customer requests replacement.",
+        "Product was non-functional upon arrival.",
+        "Air fryer displayed error code and shut off upon first use.",
+        "Heating element caused melting on top due to inadequate heat dissipation; potential safety hazard."
+      ],
+      "risk": {
+        "score": 0.5274235593830476,
+        "components": {
+          "true_complaint_rate": 0.43789374094278144,
+          "severity_score": 0.6776119402985075,
+          "safety_share": 0.8955223880597015,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.5428571428571428
+        }
+      }
+    },
+    {
+      "asin": "B0B4PPHG8G",
+      "brand": "Ninja",
+      "category": "multi_cooker",
+      "display_name": "Ninja Foodi",
+      "n_reviews_scraped": 147,
+      "true_complaint_rate": {
+        "value": 0.22972109337203675,
+        "raw_rate": 0.46258503401360546,
+        "bucket_n": {
+          "1": 53,
+          "2": 15,
+          "3": 12,
+          "4": 10,
+          "5": 52
+        },
+        "bucket_rate": {
+          "1": 0.679,
+          "2": 0.867,
+          "3": 0.75,
+          "4": 0.5,
+          "5": 0.058
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 27,
+          "high": 26,
+          "low": 4,
+          "critical": 11
+        },
+        "score": 0.5941176470588235,
+        "n_complaints": 68
+      },
+      "recency": {
+        "recent_rate": 0.5652173913043478,
+        "prior_rate": 0.5853658536585366,
+        "delta_pp": -2.0148462354188768,
+        "n_recent": 23,
+        "n_prior": 41,
+        "sufficient_n": true
+      },
+      "early_failure_share": 0.875,
+      "safety_share": 0.11764705882352941,
+      "top_defects": [
+        {
+          "value": "durability",
+          "count": 26,
+          "share": 0.38235294117647056
+        },
+        {
+          "value": "design_flaw",
+          "count": 17,
+          "share": 0.25
+        },
+        {
+          "value": "performance_degradation",
+          "count": 9,
+          "share": 0.1323529411764706
+        },
+        {
+          "value": "safety_concern",
+          "count": 8,
+          "share": 0.11764705882352941
+        },
+        {
+          "value": "missing_parts",
+          "count": 5,
+          "share": 0.07352941176470588
+        }
+      ],
+      "top_components": [
+        {
+          "value": "lid",
+          "count": 8,
+          "share": 0.13333333333333333
+        },
+        {
+          "value": "coating",
+          "count": 6,
+          "share": 0.1
+        },
+        {
+          "value": "nonstick coating",
+          "count": 3,
+          "share": 0.05
+        },
+        {
+          "value": "timer",
+          "count": 2,
+          "share": 0.03333333333333333
+        },
+        {
+          "value": "rim",
+          "count": 2,
+          "share": 0.03333333333333333
+        }
+      ],
+      "representative_summaries": [
+        "Teflon chipped after one use; product reached unsafe temperatures and failed to function as a slow cooker.",
+        "Teflon coating started to come off after two uses, posing a contamination risk.",
+        "Water inside the lid lining and burn marks on the pot after only two uses; potential safety hazard.",
+        "Nonstick coating chipped off during first use, raising safety concerns about toxicity.",
+        "Crockpot caught fire, posing a serious safety risk."
+      ],
+      "risk": {
+        "score": 0.5219496013167159,
+        "components": {
+          "true_complaint_rate": 0.4594421867440735,
+          "severity_score": 0.5941176470588235,
+          "safety_share": 0.47058823529411764,
+          "recency_trend": 0.2661717921527041,
+          "early_failure_share": 0.875
+        }
+      }
+    },
+    {
+      "asin": "B0B2VTZ432",
+      "brand": "Shark",
+      "category": "cordless_stick",
+      "display_name": "Shark Stratos Cordless",
+      "n_reviews_scraped": 104,
+      "true_complaint_rate": {
+        "value": 0.24754589371980676,
+        "raw_rate": 0.4326923076923077,
+        "bucket_n": {
+          "1": 27,
+          "2": 10,
+          "3": 7,
+          "4": 12,
+          "5": 46
+        },
+        "bucket_rate": {
+          "1": 0.778,
+          "2": 0.9,
+          "3": 0.714,
+          "4": 0.667,
+          "5": 0.043
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 18,
+          "high": 19,
+          "critical": 8
+        },
+        "score": 0.6333333333333333,
+        "n_complaints": 45
+      },
+      "recency": {
+        "recent_rate": 0.3888888888888889,
+        "prior_rate": 0.4,
+        "delta_pp": null,
+        "n_recent": 18,
+        "n_prior": 5,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.38095238095238093,
+      "safety_share": 0.1111111111111111,
+      "top_defects": [
+        {
+          "value": "design_flaw",
+          "count": 21,
+          "share": 0.4666666666666667
+        },
+        {
+          "value": "durability",
+          "count": 12,
+          "share": 0.26666666666666666
+        },
+        {
+          "value": "safety_concern",
+          "count": 5,
+          "share": 0.1111111111111111
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 3,
+          "share": 0.06666666666666667
+        },
+        {
+          "value": "performance_degradation",
+          "count": 3,
+          "share": 0.06666666666666667
+        }
+      ],
+      "top_components": [
+        {
+          "value": "cord",
+          "count": 6,
+          "share": 0.13953488372093023
+        },
+        {
+          "value": "roller",
+          "count": 4,
+          "share": 0.09302325581395349
+        },
+        {
+          "value": "canister",
+          "count": 3,
+          "share": 0.06976744186046512
+        },
+        {
+          "value": "attachments",
+          "count": 2,
+          "share": 0.046511627906976744
+        },
+        {
+          "value": "beater bar",
+          "count": 2,
+          "share": 0.046511627906976744
+        }
+      ],
+      "representative_summaries": [
+        "Burning smell and melted components due to roller drive belt failure after 18 months of use.",
+        "Vacuum became inoperable after two years, emitting a burning smell; potential safety hazard.",
+        "Product froze and emitted burning smell due to hair entanglement in the reel; potential safety hazard.",
+        "Product stopped working after one month and caused issues with house power.",
+        "Vacuum cleaner failed to start after minimal use; customer frustrated with product reliability."
+      ],
+      "risk": {
+        "score": 0.42122594893029675,
+        "components": {
+          "true_complaint_rate": 0.4950917874396135,
+          "severity_score": 0.6333333333333333,
+          "safety_share": 0.4444444444444444,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.38095238095238093
+        }
+      }
+    },
+    {
+      "asin": "B0DY9QN5XV",
+      "brand": "Shark",
+      "category": "upright_vacuum",
+      "display_name": "Shark Vertex Pro",
+      "n_reviews_scraped": 172,
+      "true_complaint_rate": {
+        "value": 0.2912520130076114,
+        "raw_rate": 0.6046511627906976,
+        "bucket_n": {
+          "1": 69,
+          "2": 22,
+          "3": 16,
+          "4": 17,
+          "5": 43
+        },
+        "bucket_rate": {
+          "1": 0.768,
+          "2": 0.818,
+          "3": 0.938,
+          "4": 0.647,
+          "5": 0.093
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 40,
+          "high": 55,
+          "critical": 8,
+          "low": 1
+        },
+        "score": 0.6019230769230769,
+        "n_complaints": 104
+      },
+      "recency": {
+        "recent_rate": 0.5217391304347826,
+        "prior_rate": 0.5185185185185185,
+        "delta_pp": 0.32206119162641045,
+        "n_recent": 23,
+        "n_prior": 27,
+        "sufficient_n": true
+      },
+      "early_failure_share": 0.3939393939393939,
+      "safety_share": 0.0,
+      "top_defects": [
+        {
+          "value": "performance_degradation",
+          "count": 50,
+          "share": 0.4807692307692308
+        },
+        {
+          "value": "durability",
+          "count": 17,
+          "share": 0.16346153846153846
+        },
+        {
+          "value": "missing_parts",
+          "count": 14,
+          "share": 0.1346153846153846
+        },
+        {
+          "value": "design_flaw",
+          "count": 13,
+          "share": 0.125
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 9,
+          "share": 0.08653846153846154
+        }
+      ],
+      "top_components": [
+        {
+          "value": "suction",
+          "count": 24,
+          "share": 0.24742268041237114
+        },
+        {
+          "value": "battery",
+          "count": 13,
+          "share": 0.13402061855670103
+        },
+        {
+          "value": "vacuum",
+          "count": 6,
+          "share": 0.061855670103092786
+        },
+        {
+          "value": "wand",
+          "count": 4,
+          "share": 0.041237113402061855
+        },
+        {
+          "value": "brush",
+          "count": 3,
+          "share": 0.030927835051546393
+        }
+      ],
+      "representative_summaries": [
+        "Product stopped working after one month of use; customer will not repurchase.",
+        "Vacuum broke apart after three months; initially stopped picking up dog hair.",
+        "Vacuum stopped charging after one use; critical failure preventing operation.",
+        "Vacuum stopped working after minimal use; battery won't recharge.",
+        "Vacuum quit working after one use; battery failure and clogging issues reported."
+      ],
+      "risk": {
+        "score": 0.4058370382382233,
+        "components": {
+          "true_complaint_rate": 0.5825040260152228,
+          "severity_score": 0.6019230769230769,
+          "safety_share": 0.0,
+          "recency_trend": 0.344068706387547,
+          "early_failure_share": 0.3939393939393939
+        }
+      }
+    },
+    {
+      "asin": "B0C25Y15TL",
+      "brand": "Ninja",
+      "category": "coffee_maker",
+      "display_name": "Ninja Coffee Maker",
+      "n_reviews_scraped": 135,
+      "true_complaint_rate": {
+        "value": 0.23490024468285342,
+        "raw_rate": 0.3925925925925926,
+        "bucket_n": {
+          "1": 21,
+          "2": 15,
+          "3": 11,
+          "4": 14,
+          "5": 69
+        },
+        "bucket_rate": {
+          "1": 1.0,
+          "2": 1.0,
+          "3": 0.545,
+          "4": 0.643,
+          "5": 0.029
+        }
+      },
+      "severity": {
+        "counts": {
+          "critical": 6,
+          "high": 29,
+          "medium": 18
+        },
+        "score": 0.6320754716981132,
+        "n_complaints": 53
+      },
+      "recency": {
+        "recent_rate": 0.3076923076923077,
+        "prior_rate": 0.45454545454545453,
+        "delta_pp": -14.685314685314681,
+        "n_recent": 52,
+        "n_prior": 33,
+        "sufficient_n": true
+      },
+      "early_failure_share": 0.5652173913043478,
+      "safety_share": 0.05660377358490566,
+      "top_defects": [
+        {
+          "value": "performance_degradation",
+          "count": 18,
+          "share": 0.33962264150943394
+        },
+        {
+          "value": "design_flaw",
+          "count": 14,
+          "share": 0.2641509433962264
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 7,
+          "share": 0.1320754716981132
+        },
+        {
+          "value": "durability",
+          "count": 6,
+          "share": 0.11320754716981132
+        },
+        {
+          "value": "missing_parts",
+          "count": 5,
+          "share": 0.09433962264150944
+        }
+      ],
+      "top_components": [
+        {
+          "value": "water reservoir",
+          "count": 4,
+          "share": 0.0784313725490196
+        },
+        {
+          "value": "coffee machine",
+          "count": 3,
+          "share": 0.058823529411764705
+        },
+        {
+          "value": "base",
+          "count": 3,
+          "share": 0.058823529411764705
+        },
+        {
+          "value": "filter",
+          "count": 3,
+          "share": 0.058823529411764705
+        },
+        {
+          "value": "brewing mechanism",
+          "count": 2,
+          "share": 0.0392156862745098
+        }
+      ],
+      "representative_summaries": [
+        "Coffee machine overflowed and failed to work consistently; replacement also malfunctioned within six months.",
+        "Coffee maker has a safety issue with the tray design that can cause spills of hot coffee.",
+        "Coffee maker exploded and caused burns; significant safety risk reported.",
+        "Coffee maker malfunctioned after six months, causing brewing issues and requiring a replacement base unit.",
+        "Coffee machine exploded coffee out of the side after a year and a half of use; deemed unusable."
+      ],
+      "risk": {
+        "score": 0.3974208687129114,
+        "components": {
+          "true_complaint_rate": 0.46980048936570684,
+          "severity_score": 0.6320754716981132,
+          "safety_share": 0.22641509433962265,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.5652173913043478
+        }
+      }
+    },
+    {
+      "asin": "B005KMDV9A",
+      "brand": "Shark",
+      "category": "upright_vacuum",
+      "display_name": "Shark Navigator",
+      "n_reviews_scraped": 189,
+      "true_complaint_rate": {
+        "value": 0.3869724167092588,
+        "raw_rate": 0.6878306878306878,
+        "bucket_n": {
+          "1": 37,
+          "2": 33,
+          "3": 36,
+          "4": 21,
+          "5": 57
+        },
+        "bucket_rate": {
+          "1": 0.946,
+          "2": 0.97,
+          "3": 0.944,
+          "4": 0.81,
+          "5": 0.175
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 60,
+          "high": 58,
+          "low": 1,
+          "critical": 11
+        },
+        "score": 0.5823076923076922,
+        "n_complaints": 130
+      },
+      "recency": {
+        "recent_rate": 0.5294117647058824,
+        "prior_rate": 0.5806451612903226,
+        "delta_pp": null,
+        "n_recent": 17,
+        "n_prior": 31,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.25,
+      "safety_share": 0.0,
+      "top_defects": [
+        {
+          "value": "design_flaw",
+          "count": 58,
+          "share": 0.4461538461538462
+        },
+        {
+          "value": "durability",
+          "count": 40,
+          "share": 0.3076923076923077
+        },
+        {
+          "value": "performance_degradation",
+          "count": 18,
+          "share": 0.13846153846153847
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 8,
+          "share": 0.06153846153846154
+        },
+        {
+          "value": "missing_parts",
+          "count": 6,
+          "share": 0.046153846153846156
+        }
+      ],
+      "top_components": [
+        {
+          "value": "hose",
+          "count": 15,
+          "share": 0.1171875
+        },
+        {
+          "value": "handle",
+          "count": 14,
+          "share": 0.109375
+        },
+        {
+          "value": "suction",
+          "count": 9,
+          "share": 0.0703125
+        },
+        {
+          "value": "cord",
+          "count": 6,
+          "share": 0.046875
+        },
+        {
+          "value": "canister",
+          "count": 6,
+          "share": 0.046875
+        }
+      ],
+      "representative_summaries": [
+        "Handle broke on second use, causing the bottom half to detach.",
+        "Swivel broke after one year of use, rendering the product unusable.",
+        "Plastic piece broke after two uses, rendering the product unusable.",
+        "Handle snapped after 15 months of use, rendering vacuum useless.",
+        "Vacuum base separated from body after 8 months of infrequent use, indicating a durability issue."
+      ],
+      "risk": {
+        "score": 0.3861449884870937,
+        "components": {
+          "true_complaint_rate": 0.7739448334185176,
+          "severity_score": 0.5823076923076922,
+          "safety_share": 0.0,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.25
+        }
+      }
+    },
+    {
+      "asin": "B07S864GPW",
+      "brand": "Shark",
+      "category": "robot_vacuum",
+      "display_name": "Shark IQ Robot",
+      "n_reviews_scraped": 236,
+      "true_complaint_rate": {
+        "value": 0.32839646464646466,
+        "raw_rate": 0.6864406779661016,
+        "bucket_n": {
+          "1": 99,
+          "2": 33,
+          "3": 36,
+          "4": 24,
+          "5": 44
+        },
+        "bucket_rate": {
+          "1": 0.758,
+          "2": 0.939,
+          "3": 0.889,
+          "4": 0.792,
+          "5": 0.114
+        }
+      },
+      "severity": {
+        "counts": {
+          "high": 81,
+          "medium": 66,
+          "critical": 14,
+          "low": 1
+        },
+        "score": 0.6,
+        "n_complaints": 162
+      },
+      "recency": {
+        "recent_rate": null,
+        "prior_rate": 1.0,
+        "delta_pp": null,
+        "n_recent": 0,
+        "n_prior": 1,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.3684210526315789,
+      "safety_share": 0.006172839506172839,
+      "top_defects": [
+        {
+          "value": "performance_degradation",
+          "count": 105,
+          "share": 0.6481481481481481
+        },
+        {
+          "value": "durability",
+          "count": 16,
+          "share": 0.09876543209876543
+        },
+        {
+          "value": "design_flaw",
+          "count": 16,
+          "share": 0.09876543209876543
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 15,
+          "share": 0.09259259259259259
+        },
+        {
+          "value": "missing_parts",
+          "count": 7,
+          "share": 0.043209876543209874
+        }
+      ],
+      "top_components": [
+        {
+          "value": "suction",
+          "count": 20,
+          "share": 0.13333333333333333
+        },
+        {
+          "value": "mapping",
+          "count": 15,
+          "share": 0.1
+        },
+        {
+          "value": "battery",
+          "count": 9,
+          "share": 0.06
+        },
+        {
+          "value": "vacuum",
+          "count": 8,
+          "share": 0.05333333333333334
+        },
+        {
+          "value": "navigation",
+          "count": 4,
+          "share": 0.02666666666666667
+        }
+      ],
+      "representative_summaries": [
+        "Vacuum failed to operate despite new battery; customer disappointed with product performance.",
+        "Product broke after four months of use, failing to function after multiple uses.",
+        "Product failed to function properly upon first use; error message indicated mechanical issue.",
+        "Product stopped working; warranty issues with Shark and Amazon reported.",
+        "Robot vacuum malfunctioned after four months, only goes in circles and fails to operate correctly."
+      ],
+      "risk": {
+        "score": 0.3772393082875539,
+        "components": {
+          "true_complaint_rate": 0.6567929292929293,
+          "severity_score": 0.6,
+          "safety_share": 0.024691358024691357,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.3684210526315789
+        }
+      }
+    },
+    {
+      "asin": "B00NGV4506",
+      "brand": "Ninja",
+      "category": "blender",
+      "display_name": "Ninja Professional Blender",
+      "n_reviews_scraped": 238,
+      "true_complaint_rate": {
+        "value": 0.22373363442113445,
+        "raw_rate": 0.6554621848739496,
+        "bucket_n": {
+          "1": 99,
+          "2": 40,
+          "3": 32,
+          "4": 10,
+          "5": 52
+        },
+        "bucket_rate": {
+          "1": 0.899,
+          "2": 0.85,
+          "3": 0.719,
+          "4": 0.6,
+          "5": 0.019
+        }
+      },
+      "severity": {
+        "counts": {
+          "critical": 31,
+          "medium": 24,
+          "low": 2,
+          "high": 99
+        },
+        "score": 0.7057692307692307,
+        "n_complaints": 156
+      },
+      "recency": {
+        "recent_rate": 0.3333333333333333,
+        "prior_rate": 0.4,
+        "delta_pp": null,
+        "n_recent": 12,
+        "n_prior": 25,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.41346153846153844,
+      "safety_share": 0.04487179487179487,
+      "top_defects": [
+        {
+          "value": "durability",
+          "count": 95,
+          "share": 0.6089743589743589
+        },
+        {
+          "value": "design_flaw",
+          "count": 18,
+          "share": 0.11538461538461539
+        },
+        {
+          "value": "missing_parts",
+          "count": 16,
+          "share": 0.10256410256410256
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 16,
+          "share": 0.10256410256410256
+        },
+        {
+          "value": "safety_concern",
+          "count": 7,
+          "share": 0.04487179487179487
+        }
+      ],
+      "top_components": [
+        {
+          "value": "pitcher",
+          "count": 43,
+          "share": 0.2945205479452055
+        },
+        {
+          "value": "blender",
+          "count": 13,
+          "share": 0.08904109589041095
+        },
+        {
+          "value": "lid",
+          "count": 12,
+          "share": 0.0821917808219178
+        },
+        {
+          "value": "base",
+          "count": 7,
+          "share": 0.04794520547945205
+        },
+        {
+          "value": "jar",
+          "count": 7,
+          "share": 0.04794520547945205
+        }
+      ],
+      "representative_summaries": [
+        "A piece of plastic broke off after a year and a half, making the blender unusable.",
+        "Burning smell from both blenders indicates a potential safety hazard.",
+        "Base makes loud grinding noise, raising safety concerns; customer service process criticized.",
+        "Lid failure prevents blender from turning on; customer unable to use product.",
+        "Jar developed cracks after one year of use, making it unusable due to leaks."
+      ],
+      "risk": {
+        "score": 0.3733106934731935,
+        "components": {
+          "true_complaint_rate": 0.4474672688422689,
+          "severity_score": 0.7057692307692307,
+          "safety_share": 0.1794871794871795,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.41346153846153844
+        }
+      }
+    },
+    {
+      "asin": "B0028MB3HM",
+      "brand": "Shark",
+      "category": "steam_mop",
+      "display_name": "Shark Steam Mop",
+      "n_reviews_scraped": 173,
+      "true_complaint_rate": {
+        "value": 0.2510753246753247,
+        "raw_rate": 0.5491329479768786,
+        "bucket_n": {
+          "1": 75,
+          "2": 13,
+          "3": 20,
+          "4": 11,
+          "5": 49
+        },
+        "bucket_rate": {
+          "1": 0.76,
+          "2": 1.0,
+          "3": 0.8,
+          "4": 0.545,
+          "5": 0.061
+        }
+      },
+      "severity": {
+        "counts": {
+          "medium": 37,
+          "high": 37,
+          "critical": 21
+        },
+        "score": 0.6494736842105263,
+        "n_complaints": 95
+      },
+      "recency": {
+        "recent_rate": 0.3333333333333333,
+        "prior_rate": 1.0,
+        "delta_pp": null,
+        "n_recent": 6,
+        "n_prior": 2,
+        "sufficient_n": false
+      },
+      "early_failure_share": 0.2916666666666667,
+      "safety_share": 0.031578947368421054,
+      "top_defects": [
+        {
+          "value": "performance_degradation",
+          "count": 31,
+          "share": 0.3263157894736842
+        },
+        {
+          "value": "design_flaw",
+          "count": 19,
+          "share": 0.2
+        },
+        {
+          "value": "mechanical_failure",
+          "count": 17,
+          "share": 0.17894736842105263
+        },
+        {
+          "value": "durability",
+          "count": 16,
+          "share": 0.16842105263157894
+        },
+        {
+          "value": "missing_parts",
+          "count": 9,
+          "share": 0.09473684210526316
+        }
+      ],
+      "top_components": [
+        {
+          "value": "handle",
+          "count": 11,
+          "share": 0.13580246913580246
+        },
+        {
+          "value": "steam",
+          "count": 9,
+          "share": 0.1111111111111111
+        },
+        {
+          "value": "mop",
+          "count": 8,
+          "share": 0.09876543209876543
+        },
+        {
+          "value": "steam mop",
+          "count": 4,
+          "share": 0.04938271604938271
+        },
+        {
+          "value": "mop head",
+          "count": 4,
+          "share": 0.04938271604938271
+        }
+      ],
+      "representative_summaries": [
+        "Product broke in half upon falling; deemed unusable.",
+        "Handle snapped during use, indicating a significant quality issue with the material.",
+        "Product failed to operate after minimal use, customer expresses strong dissatisfaction.",
+        "Product failed to heat up and release steam, rendering it unusable.",
+        "Product arrived without required cleaning pads, rendering it unusable."
+      ],
+      "risk": {
+        "score": 0.3495530895420369,
+        "components": {
+          "true_complaint_rate": 0.5021506493506493,
+          "severity_score": 0.6494736842105263,
+          "safety_share": 0.12631578947368421,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.2916666666666667
+        }
+      }
+    }
+  ]
+}

@@ -15,35 +15,35 @@ already has a defect reputation, every model looks great on the eval set.
 SKUS = [
     # ---- Shark ----
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B0DY9QN5XV",  # TODO: fill in
         "brand": "Shark",
         "category": "upright_vacuum",
         "display_name": "Shark Vertex Pro",
         "notes": "Flagship upright. Motor + brushroll are the obvious failure components.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B07S864GPW",  # TODO: fill in
         "brand": "Shark",
         "category": "robot_vacuum",
         "display_name": "Shark IQ Robot",
         "notes": "Robot vacuum. Battery, wheels, sensors, dock charging are the surfaces.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B0B2VTZ432",  # TODO: fill in
         "brand": "Shark",
         "category": "cordless_stick",
         "display_name": "Shark Stratos Cordless",
         "notes": "Cordless stick. Battery degradation is the typical 6-month signal.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B005KMDV9A",  # TODO: fill in
         "brand": "Shark",
         "category": "upright_vacuum",
         "display_name": "Shark Navigator",
         "notes": "High-volume entry-level upright. Lots of reviews, mixed quality.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B0028MB3HM",  # TODO: fill in
         "brand": "Shark",
         "category": "steam_mop",
         "display_name": "Shark Steam Mop",
@@ -52,35 +52,35 @@ SKUS = [
 
     # ---- Ninja ----
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B08QXB9BH5",  # TODO: fill in
         "brand": "Ninja",
         "category": "ice_cream_maker",
         "display_name": "Ninja Creami",
         "notes": "Viral product with high review volume. Motor + paddle + pint container.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B0B4PPHG8G",  # TODO: fill in
         "brand": "Ninja",
         "category": "multi_cooker",
         "display_name": "Ninja Foodi",
         "notes": "Pressure cooker + air fryer. Sealing ring, heating element, lid latch.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B00NGV4506",  # TODO: fill in
         "brand": "Ninja",
         "category": "blender",
         "display_name": "Ninja Professional Blender",
         "notes": "Workhorse blender. Blade, motor base, jar gasket are typical complaints.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B0C25Y15TL",  # TODO: fill in
         "brand": "Ninja",
         "category": "coffee_maker",
         "display_name": "Ninja Coffee Maker",
         "notes": "Different category. Heating element, carafe, water reservoir, valves.",
     },
     {
-        "asin": "",  # TODO: fill in
+        "asin": "B089TQWJKK",  # TODO: fill in
         "brand": "Ninja",
         "category": "air_fryer",
         "display_name": "Ninja Air Fryer",
