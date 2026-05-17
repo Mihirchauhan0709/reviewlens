@@ -1,9 +1,10 @@
 # Day 1: scraping + storage
 apify-client>=1.7.0
- 
+
 # Day 2: extraction + eval
 openai>=1.50.0
- 
+
 # Day 3: aggregation + dashboard
 pandas>=2.2.0
 streamlit>=1.38.0
+plotly>=5.20.0

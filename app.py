@@ -24,6 +24,8 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 # --- paths ----------------------------------------------------------------
@@ -66,6 +68,33 @@ st.markdown("""
     .small-muted { opacity: 0.65; font-size: 0.85rem; }
 </style>
 """, unsafe_allow_html=True)
+
+
+# --- chart styling --------------------------------------------------------
+# One consistent color story across the whole dashboard.
+ACCENT_RED  = "#e63946"        # bad / safety / severity
+ACCENT_GREY = "#6c757d"        # neutral
+GRID_COLOR  = "rgba(128, 128, 128, 0.18)"
+
+
+def style_chart(fig: go.Figure, height: int = 300, show_legend: bool = False) -> go.Figure:
+    """Apply our consistent layout to a Plotly figure.
+
+    Transparent background so the chart adapts to Streamlit's theme. Subtle
+    grid. No chrome we don't need.
+    """
+    fig.update_layout(
+        height=height,
+        margin=dict(l=8, r=8, t=12, b=8),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(size=13),
+        showlegend=show_legend,
+        hoverlabel=dict(font_size=13),
+    )
+    fig.update_xaxes(gridcolor=GRID_COLOR, zerolinecolor=GRID_COLOR)
+    fig.update_yaxes(gridcolor=GRID_COLOR, zerolinecolor=GRID_COLOR)
+    return fig
 
 
 # --- data loading ---------------------------------------------------------
@@ -207,6 +236,32 @@ if page == "Executive Summary":
     risk_score  = top["risk"]["score"]
     n_complaints = top["severity"]["n_complaints"]
     top_component = top["top_components"][0] if top["top_components"] else None
+    cluster = top.get("failure_cluster")
+
+    # Build the headline narrative from the cluster if we have one, otherwise
+    # fall back to a simpler safety-share message.
+    if cluster:
+        cluster_share_pct = cluster["share_of_complaints"] * 100
+        ttf_str = (
+            f" Median time-to-failure: {cluster['median_ttf_days']} days."
+            if cluster["median_ttf_days"] is not None else ""
+        )
+        narrative = (
+            f"<b>{cluster['n_matches']} complaints "
+            f"({cluster_share_pct:.0f}% of complaints on this SKU)</b> "
+            f"describe symptoms consistent with <b>{cluster['narrative']}</b>. "
+            f"Signal converges on the <b>{top_component['value']}</b> "
+            f"({top_component['share']*100:.0f}% of complaints) — and across "
+            f"three independent dimensions: defect category, component mention, "
+            f"and time-to-failure.{ttf_str}"
+        )
+    else:
+        narrative = (
+            f"<b>{safety_pct:.0f}% of complaints flagged as safety concerns</b> "
+            f"({n_complaints} reviews total). "
+            f"Signal converges on the <b>{top_component['value'] if top_component else 'product'}</b> "
+            f"({top_component['share']*100:.0f}% of complaints name this component)."
+        )
 
     st.markdown(f"""
 <div class="highlight-card">
@@ -215,10 +270,7 @@ if page == "Executive Summary":
         <span class="small-muted">Risk score {risk_score:.2f} · highest in dataset</span>
     </div>
     <p class="insight-text" style="margin-top: 0.75rem;">
-        <b>{safety_pct:.0f}% of complaints flagged as safety concerns</b> ({n_complaints} reviews total).
-        Signal converges on the <b>{top_component['value'] if top_component else 'product'}</b>
-        ({top_component['share']*100:.0f}% of complaints name this component).
-        Multiple reviews describe thermal failures — smoke, melted components — within the first month of use.
+        {narrative}
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -300,6 +352,98 @@ elif page == "SKU Deep Dive":
 
     st.markdown("---")
 
+    # ---- Convergent signal panel ----
+    # If the cluster detector found a coherent failure pattern, surface it here
+    # as the headline narrative of the deep dive. This is the answer to
+    # "what is the SKU's actual problem?" before the user looks at any charts.
+    cluster = f.get("failure_cluster")
+    if cluster:
+        share_pct = cluster["share_of_complaints"] * 100
+        n = cluster["n_matches"]
+        median_ttf = cluster["median_ttf_days"]
+        early = cluster["early_share"]
+
+        # Build the bullet evidence lines dynamically — we only show what's real
+        evidence_lines = []
+        evidence_lines.append(
+            f"**{n} complaints** ({share_pct:.0f}% of all complaints on this SKU) "
+            f"describe symptoms consistent with **{cluster['name']}**"
+        )
+        if cluster["top_components"]:
+            comps = ", ".join(f"{c['value']} ({c['count']})" for c in cluster["top_components"])
+            evidence_lines.append(f"**Components named in this cluster:** {comps}")
+        if median_ttf is not None:
+            evidence_lines.append(
+                f"**Median time-to-failure:** {median_ttf} days "
+                f"(across {cluster['n_with_ttf']} reviews where customer stated a duration)"
+            )
+        if early is not None:
+            evidence_lines.append(
+                f"**{early*100:.0f}% occur within the first 60 days** of ownership"
+            )
+
+        st.markdown(f"#### 🎯 Convergent signal detected: {cluster['narrative']}")
+        for line in evidence_lines:
+            st.markdown(f"- {line}")
+
+        if cluster["representative_quotes"]:
+            with st.expander("Representative complaint summaries"):
+                for q in cluster["representative_quotes"]:
+                    st.markdown(f"> {q}")
+
+        st.markdown("---")
+
+    # ---- Risk score decomposition ----
+    # Defends against "how is the risk score computed?" by exposing every input.
+    with st.expander("📊 Why did this SKU score this way? (risk decomposition)"):
+        st.caption(
+            "Composite risk is a weighted blend of 5 normalized dimensions. "
+            "Each bar shows how much that dimension contributed to the final score."
+        )
+        sorted_contribs = f["risk"]["sorted"]
+        decomp_df = pd.DataFrame([
+            {
+                "Dimension":     c["name"].replace("_", " "),
+                "Contribution":  c["contribution"],
+                "Value":         c["component"],
+                "Weight":        c["weight"],
+                "Available":     c["data_available"],
+            }
+            for c in sorted_contribs
+        ])
+
+        fig = go.Figure(go.Bar(
+            x=decomp_df["Contribution"],
+            y=decomp_df["Dimension"],
+            orientation="h",
+            marker=dict(
+                color=decomp_df["Contribution"],
+                colorscale=[[0, "#f4a3aa"], [1, ACCENT_RED]],
+                line=dict(width=0),
+            ),
+            customdata=decomp_df[["Value", "Weight"]].values,
+            hovertemplate=(
+                "<b>%{y}</b><br>"
+                "Normalized value: %{customdata[0]:.2f}<br>"
+                "Weight: %{customdata[1]:.0%}<br>"
+                "Contribution: %{x:.3f}<extra></extra>"
+            ),
+        ))
+        fig.update_layout(
+            xaxis_title="Contribution to risk score",
+            yaxis_title=None,
+            yaxis=dict(autorange="reversed"),
+        )
+        st.plotly_chart(style_chart(fig, height=260), config={"displayModeBar": False})
+
+        top_contrib = sorted_contribs[0]
+        st.markdown(
+            f"**Top contributor:** {top_contrib['name'].replace('_', ' ')} "
+            f"({top_contrib['contribution']:.3f} of the {f['risk']['score']:.3f} total)."
+        )
+
+    st.markdown("---")
+
     # Two columns: defects on left, components on right
     col_left, col_right = st.columns(2)
 
@@ -308,7 +452,24 @@ elif page == "SKU Deep Dive":
         if f["top_defects"]:
             defect_df = pd.DataFrame(f["top_defects"])
             defect_df["value"] = defect_df["value"].str.replace("_", " ")
-            st.bar_chart(defect_df.set_index("value")["count"], height=280)
+            defect_df["pct"] = defect_df["share"] * 100
+            fig = px.bar(
+                defect_df,
+                x="count",
+                y="value",
+                orientation="h",
+                custom_data=["pct"],
+                color_discrete_sequence=[ACCENT_RED],
+            )
+            fig.update_traces(
+                hovertemplate="<b>%{y}</b><br>%{x} complaints (%{customdata[0]:.0f}%)<extra></extra>",
+            )
+            fig.update_layout(
+                xaxis_title=None,
+                yaxis_title=None,
+                yaxis=dict(autorange="reversed"),   # biggest on top
+            )
+            st.plotly_chart(style_chart(fig, height=280), config={"displayModeBar": False})
         else:
             st.info("No complaints to break down.")
 
@@ -316,7 +477,24 @@ elif page == "SKU Deep Dive":
         st.subheader("Top components mentioned")
         if f["top_components"]:
             comp_df = pd.DataFrame(f["top_components"])
-            st.bar_chart(comp_df.set_index("value")["count"], height=280)
+            comp_df["pct"] = comp_df["share"] * 100
+            fig = px.bar(
+                comp_df,
+                x="count",
+                y="value",
+                orientation="h",
+                custom_data=["pct"],
+                color_discrete_sequence=[ACCENT_GREY],
+            )
+            fig.update_traces(
+                hovertemplate="<b>%{y}</b><br>%{x} complaints (%{customdata[0]:.0f}%)<extra></extra>",
+            )
+            fig.update_layout(
+                xaxis_title=None,
+                yaxis_title=None,
+                yaxis=dict(autorange="reversed"),
+            )
+            st.plotly_chart(style_chart(fig, height=280), config={"displayModeBar": False})
         else:
             st.info("No specific components mentioned.")
 
@@ -327,11 +505,31 @@ elif page == "SKU Deep Dive":
     sev_counts = f["severity"]["counts"]
     if sev_counts:
         order = ["critical", "high", "medium", "low"]
-        sev_df = pd.DataFrame([
+        sev_data = [
             {"Severity": s, "Count": sev_counts.get(s, 0)}
             for s in order if sev_counts.get(s, 0) > 0
-        ])
-        st.bar_chart(sev_df.set_index("Severity")["Count"], height=200)
+        ]
+        sev_df = pd.DataFrame(sev_data)
+        # Graduated red: darker for more severe
+        severity_colors = {
+            "critical": "#9d1c2a",
+            "high":     "#e63946",
+            "medium":   "#f4a261",
+            "low":      "#a8a8a8",
+        }
+        fig = px.bar(
+            sev_df,
+            x="Severity",
+            y="Count",
+            color="Severity",
+            color_discrete_map=severity_colors,
+            category_orders={"Severity": order},
+        )
+        fig.update_traces(
+            hovertemplate="<b>%{x}</b><br>%{y} complaints<extra></extra>",
+        )
+        fig.update_layout(xaxis_title=None, yaxis_title=None)
+        st.plotly_chart(style_chart(fig, height=240), config={"displayModeBar": False})
     else:
         st.info("No complaints to bucket by severity.")
 
@@ -346,8 +544,26 @@ elif page == "SKU Deep Dive":
         # Rolling 30-day complaint rate
         ts_df["is_complaint"] = ts_df["has_quality_complaint"].astype(int)
         rolling = ts_df["is_complaint"].rolling("30D", min_periods=5).mean()
-        if not rolling.dropna().empty:
-            st.line_chart(rolling * 100, height=240, y_label="Complaint rate (%)")
+        rolling = rolling.dropna()
+        if not rolling.empty:
+            rolling_pct = rolling * 100
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(
+                x=rolling_pct.index,
+                y=rolling_pct.values,
+                mode="lines",
+                line=dict(color=ACCENT_RED, width=2.5),
+                fill="tozeroy",
+                fillcolor="rgba(230, 57, 70, 0.12)",
+                hovertemplate="<b>%{x|%b %d, %Y}</b><br>%{y:.1f}% complaint rate<extra></extra>",
+                name="",
+            ))
+            fig.update_layout(
+                xaxis_title=None,
+                yaxis_title="Complaint rate (%)",
+                yaxis=dict(ticksuffix="%"),
+            )
+            st.plotly_chart(style_chart(fig, height=260), config={"displayModeBar": False})
         else:
             st.info("Not enough reviews with dates for a rolling trend.")
     else:

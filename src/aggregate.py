@@ -65,7 +65,7 @@ def load_joined() -> list[dict]:
         conn.execute(f"ATTACH DATABASE '{SIGNALS_DB_PATH}' AS sig")
         rows = conn.execute("""
             SELECT
-                r.review_id, r.asin, r.rating, r.review_date,
+                r.review_id, r.asin, r.rating, r.review_date, r.review_text,
                 s.brand, s.category, s.display_name,
                 sig.has_quality_complaint, sig.defect_category,
                 sig.component_mentioned, sig.severity,
@@ -75,6 +75,121 @@ def load_joined() -> list[dict]:
             JOIN sig.signals sig ON sig.review_id = r.review_id
         """).fetchall()
     return [dict(r) for r in rows]
+
+
+def detect_failure_cluster(sku_rows: list[dict]) -> dict[str, Any] | None:
+    """Detect convergent failure patterns by scanning complaint review text.
+
+    A "cluster" is a pattern of similar failure descriptions across multiple
+    reviews — e.g., reviews that all mention smoke/burning/melting are likely
+    describing the same underlying root cause (thermal failure).
+
+    This is the engine behind the "convergent signal" panel. Without it, the
+    dashboard tells you "there are 40 safety complaints" but not WHY they're
+    a coherent signal vs. 40 unrelated safety issues.
+
+    Returns the strongest cluster found, or None if no cluster crosses
+    minimum thresholds (5 reviews, >= 10% of complaints).
+    """
+    clusters = {
+        "thermal_failure": {
+            "name": "thermal failure",
+            "keywords": ["smoke", "smoking", "burn", "burned", "burning", "burnt",
+                         "melt", "melted", "melting", "fire", "overheat", "hot",
+                         "scorch", "spark"],
+            "narrative": "thermal failure",
+        },
+        "structural_break": {
+            "name": "structural breakage",
+            "keywords": ["broke", "broken", "crack", "cracked", "snap", "snapped",
+                         "fell off", "fell apart", "shattered", "fractured"],
+            "narrative": "physical breakage",
+        },
+        "electrical_failure": {
+            "name": "electrical failure",
+            "keywords": ["shock", "shocked", "shorted", "shorting", "stopped working",
+                         "won't turn on", "wont turn on", "wouldn't turn on",
+                         "dead", "no power", "electrical"],
+            "narrative": "electrical failure",
+        },
+        "performance_drop": {
+            "name": "performance degradation",
+            "keywords": ["weak", "weaker", "slow", "slower", "loud", "louder",
+                         "noisy", "doesn't work as well", "lost suction",
+                         "less powerful"],
+            "narrative": "performance degradation",
+        },
+    }
+
+    complaint_rows = [r for r in sku_rows if r["has_quality_complaint"]]
+    n_complaints = len(complaint_rows)
+    if n_complaints < 10:
+        return None
+
+    # Score each cluster by how many complaint reviews contain its keywords.
+    # We don't dedupe within a review — if it mentions "smoke" AND "burning",
+    # that's a stronger signal, not a weaker one. But we *do* normalize the
+    # match check (one match per review = one count).
+    found = []
+    for key, c in clusters.items():
+        matches = []
+        for r in complaint_rows:
+            text = (r.get("review_text") or r.get("summary") or "").lower()
+            if any(kw in text for kw in c["keywords"]):
+                matches.append(r)
+        share = len(matches) / n_complaints
+        if len(matches) >= 5 and share >= 0.10:
+            found.append({
+                "type": key,
+                "name": c["name"],
+                "narrative": c["narrative"],
+                "matches": matches,
+                "n_matches": len(matches),
+                "share": share,
+            })
+
+    if not found:
+        return None
+
+    # Strongest cluster = most matches.
+    top = max(found, key=lambda x: x["n_matches"])
+
+    # Extract supporting evidence: median time-to-failure, % within 60 days,
+    # top component overlap, and three short representative phrases.
+    ttf_values = [r["time_to_failure_days"] for r in top["matches"]
+                  if r.get("time_to_failure_days") is not None]
+    median_ttf = sorted(ttf_values)[len(ttf_values)//2] if ttf_values else None
+    early_count = sum(1 for v in ttf_values if v < 60)
+    early_share = (early_count / len(ttf_values)) if ttf_values else None
+
+    components_in_cluster = Counter(
+        r["component_mentioned"] for r in top["matches"]
+        if r.get("component_mentioned")
+    )
+    top_components = [
+        {"value": v, "count": c} for v, c in components_in_cluster.most_common(3)
+    ]
+
+    quotes = []
+    for r in top["matches"][:8]:
+        s = r.get("summary") or ""
+        if s and len(s) < 140:
+            quotes.append(s)
+        if len(quotes) >= 3:
+            break
+
+    return {
+        "type":              top["type"],
+        "name":              top["name"],
+        "narrative":         top["narrative"],
+        "n_matches":         top["n_matches"],
+        "share_of_complaints": top["share"],
+        "median_ttf_days":   median_ttf,
+        "n_with_ttf":        len(ttf_values),
+        "early_share":       early_share,
+        "top_components":    top_components,
+        "representative_quotes": quotes,
+    }
 
 
 def true_complaint_rate(sku_rows: list[dict]) -> dict[str, Any]:
@@ -268,6 +383,11 @@ def compute_risk(true_rate: float, sev_score: float, safety_share: float,
                  trend_pp: float | None, early_share: float) -> dict:
     """Composite risk score in [0, 1]. Higher = more concerning.
 
+    Also returns:
+      - components: each dimension normalized to [0, 1]
+      - contributions: how many points each dimension added (component * weight)
+      - sorted_contributions: descending, for "top contributor" display
+
     Normalization choices below are calibrated for consumer-product review data:
       - complaint rate: 0-50% is the meaningful range
       - severity score: already 0-1
@@ -282,19 +402,43 @@ def compute_risk(true_rate: float, sev_score: float, safety_share: float,
         "recency_trend":       normalize_for_risk(trend_pp,  -10.0, 20.0),
         "early_failure_share": normalize_for_risk(early_share, 0.0, 1.00),
     }
-    score = sum(components[k] * w for k, w in RISK_WEIGHTS.items())
-    return {"score": score, "components": components}
+    contributions = {k: components[k] * RISK_WEIGHTS[k] for k in RISK_WEIGHTS}
+    score = sum(contributions.values())
+
+    # Sorted descending for "top contributor" display. Each entry is annotated
+    # with weight so the dashboard can show "20% × 0.95 = 0.19 from safety share."
+    sorted_contribs = sorted(
+        [
+            {
+                "name":         k,
+                "component":    components[k],
+                "weight":       RISK_WEIGHTS[k],
+                "contribution": contributions[k],
+                "data_available": k != "recency_trend" or trend_pp is not None,
+            }
+            for k in RISK_WEIGHTS
+        ],
+        key=lambda x: -x["contribution"],
+    )
+
+    return {
+        "score":         score,
+        "components":    components,
+        "contributions": contributions,
+        "sorted":        sorted_contribs,
+    }
 
 
 def aggregate_sku(sku_rows: list[dict]) -> dict[str, Any]:
     """Build the full findings record for a single SKU."""
-    sample = sku_rows[0]
-    tcr    = true_complaint_rate(sku_rows)
-    sev    = severity_distribution(sku_rows)
-    rec    = recency_trend(sku_rows)
-    early  = early_failure_share(sku_rows)
-    safety = safety_complaint_share(sku_rows)
-    risk   = compute_risk(tcr["value"], sev["score"], safety, rec["delta_pp"], early)
+    sample  = sku_rows[0]
+    tcr     = true_complaint_rate(sku_rows)
+    sev     = severity_distribution(sku_rows)
+    rec     = recency_trend(sku_rows)
+    early   = early_failure_share(sku_rows)
+    safety  = safety_complaint_share(sku_rows)
+    cluster = detect_failure_cluster(sku_rows)
+    risk    = compute_risk(tcr["value"], sev["score"], safety, rec["delta_pp"], early)
 
     return {
         "asin":              sample["asin"],
@@ -310,6 +454,7 @@ def aggregate_sku(sku_rows: list[dict]) -> dict[str, Any]:
         "top_defects":       top_n(sku_rows, "defect_category"),
         "top_components":    top_n(sku_rows, "component_mentioned"),
         "representative_summaries": representative_summaries(sku_rows),
+        "failure_cluster":   cluster,
         "risk":              risk,
     }
 

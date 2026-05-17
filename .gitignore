@@ -5,10 +5,6 @@ __pycache__/
 venv/
 .env
 
-# Project artifacts
-data/*.db
-data/eval_set.jsonl
-
 # Editor
 .vscode/
 .idea/
@@ -16,3 +12,9 @@ data/eval_set.jsonl
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Failure analysis (regenerated each eval run, large, not needed in repo)
+data/failures.md
+
+# NOTE: data/*.db, data/findings.json, data/brief.txt, and data/eval_set.jsonl
+# ARE intentionally committed — the deployed dashboard reads from them.

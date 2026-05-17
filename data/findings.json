@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T15:55:36",
+  "generated_at": "2026-05-17T00:45:15",
   "n_skus": 10,
   "category_baseline": {
     "ice_cream_maker": 0.2207041847041847,
@@ -118,6 +118,35 @@
         "Machine failed after five months, making high-pitched noise and trapping components; emergency stop feature absent.",
         "Machine emitted smoke and set off fire alarm after 30 uses; blade broke and posed safety risk."
       ],
+      "failure_cluster": {
+        "type": "thermal_failure",
+        "name": "thermal failure",
+        "narrative": "thermal failure",
+        "n_matches": 35,
+        "share_of_complaints": 0.30434782608695654,
+        "median_ttf_days": 10,
+        "n_with_ttf": 25,
+        "early_share": 0.68,
+        "top_components": [
+          {
+            "value": "blade",
+            "count": 12
+          },
+          {
+            "value": "lid",
+            "count": 5
+          },
+          {
+            "value": "machine",
+            "count": 5
+          }
+        ],
+        "representative_quotes": [
+          "Product started smoking and malfunctioned after less than a month of use, posing a safety risk.",
+          "Motor burnt and produced smoke during use; potential safety hazard noted.",
+          "Blade detached and sparked during use, posing a health hazard and potential fire risk."
+        ]
+      },
       "risk": {
         "score": 0.5983058060170189,
         "components": {
@@ -126,7 +155,51 @@
           "safety_share": 1.0,
           "recency_trend": 0.0,
           "early_failure_share": 0.7105263157894737
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.13242251082251083,
+          "severity_score": 0.15930434782608696,
+          "safety_share": 0.2,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.10657894736842105
+        },
+        "sorted": [
+          {
+            "name": "safety_share",
+            "component": 1.0,
+            "weight": 0.2,
+            "contribution": 0.2,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.7965217391304348,
+            "weight": 0.2,
+            "contribution": 0.15930434782608696,
+            "data_available": true
+          },
+          {
+            "name": "true_complaint_rate",
+            "component": 0.4414083694083694,
+            "weight": 0.3,
+            "contribution": 0.13242251082251083,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.7105263157894737,
+            "weight": 0.15,
+            "contribution": 0.10657894736842105,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -164,11 +237,11 @@
         "n_complaints": 67
       },
       "recency": {
-        "recent_rate": 0.47368421052631576,
-        "prior_rate": 0.3448275862068966,
+        "recent_rate": 0.4444444444444444,
+        "prior_rate": 0.36666666666666664,
         "delta_pp": null,
-        "n_recent": 19,
-        "n_prior": 29,
+        "n_recent": 18,
+        "n_prior": 30,
         "sufficient_n": false
       },
       "early_failure_share": 0.5428571428571428,
@@ -234,6 +307,35 @@
         "Air fryer displayed error code and shut off upon first use.",
         "Heating element caused melting on top due to inadequate heat dissipation; potential safety hazard."
       ],
+      "failure_cluster": {
+        "type": "thermal_failure",
+        "name": "thermal failure",
+        "narrative": "thermal failure",
+        "n_matches": 17,
+        "share_of_complaints": 0.2537313432835821,
+        "median_ttf_days": 60,
+        "n_with_ttf": 8,
+        "early_share": 0.5,
+        "top_components": [
+          {
+            "value": "basket",
+            "count": 2
+          },
+          {
+            "value": "heating element",
+            "count": 2
+          },
+          {
+            "value": "plug",
+            "count": 2
+          }
+        ],
+        "representative_quotes": [
+          "Product melted after two months of use, indicating a durability issue.",
+          "Air fryer does not automatically turn off when baskets are opened mid-cycle, which may affect safety.",
+          "Burning smell from basket on second day of use; customer ordered a replacement due to safety concern."
+        ]
+      },
       "risk": {
         "score": 0.5274235593830476,
         "components": {
@@ -242,7 +344,51 @@
           "safety_share": 0.8955223880597015,
           "recency_trend": 0.0,
           "early_failure_share": 0.5428571428571428
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.13136812228283443,
+          "severity_score": 0.1355223880597015,
+          "safety_share": 0.17910447761194032,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.08142857142857142
+        },
+        "sorted": [
+          {
+            "name": "safety_share",
+            "component": 0.8955223880597015,
+            "weight": 0.2,
+            "contribution": 0.17910447761194032,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6776119402985075,
+            "weight": 0.2,
+            "contribution": 0.1355223880597015,
+            "data_available": true
+          },
+          {
+            "name": "true_complaint_rate",
+            "component": 0.43789374094278144,
+            "weight": 0.3,
+            "contribution": 0.13136812228283443,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.5428571428571428,
+            "weight": 0.15,
+            "contribution": 0.08142857142857142,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -280,11 +426,11 @@
         "n_complaints": 68
       },
       "recency": {
-        "recent_rate": 0.5652173913043478,
-        "prior_rate": 0.5853658536585366,
-        "delta_pp": -2.0148462354188768,
-        "n_recent": 23,
-        "n_prior": 41,
+        "recent_rate": 0.5238095238095238,
+        "prior_rate": 0.6046511627906976,
+        "delta_pp": -8.08416389811738,
+        "n_recent": 21,
+        "n_prior": 43,
         "sufficient_n": true
       },
       "early_failure_share": 0.875,
@@ -350,15 +496,88 @@
         "Nonstick coating chipped off during first use, raising safety concerns about toxicity.",
         "Crockpot caught fire, posing a serious safety risk."
       ],
+      "failure_cluster": {
+        "type": "performance_drop",
+        "name": "performance degradation",
+        "narrative": "performance degradation",
+        "n_matches": 12,
+        "share_of_complaints": 0.17647058823529413,
+        "median_ttf_days": 14,
+        "n_with_ttf": 5,
+        "early_share": 0.8,
+        "top_components": [
+          {
+            "value": "coating",
+            "count": 2
+          },
+          {
+            "value": "high setting",
+            "count": 1
+          },
+          {
+            "value": "inner pot",
+            "count": 1
+          }
+        ],
+        "representative_quotes": [
+          "High setting causes constant boiling, not suitable for slow cooking as expected.",
+          "Chipping observed on inner pot after a few months; potential food safety concern.",
+          "Beeping issue with sensor on braise function; does not disrupt cooking but is very annoying."
+        ]
+      },
       "risk": {
-        "score": 0.5219496013167159,
+        "score": 0.4916030130032234,
         "components": {
           "true_complaint_rate": 0.4594421867440735,
           "severity_score": 0.5941176470588235,
           "safety_share": 0.47058823529411764,
-          "recency_trend": 0.2661717921527041,
+          "recency_trend": 0.06386120339608733,
           "early_failure_share": 0.875
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.13783265602322203,
+          "severity_score": 0.11882352941176472,
+          "safety_share": 0.09411764705882353,
+          "recency_trend": 0.0095791805094131,
+          "early_failure_share": 0.13125
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.4594421867440735,
+            "weight": 0.3,
+            "contribution": 0.13783265602322203,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.875,
+            "weight": 0.15,
+            "contribution": 0.13125,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.5941176470588235,
+            "weight": 0.2,
+            "contribution": 0.11882352941176472,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.47058823529411764,
+            "weight": 0.2,
+            "contribution": 0.09411764705882353,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.06386120339608733,
+            "weight": 0.15,
+            "contribution": 0.0095791805094131,
+            "data_available": true
+          }
+        ]
       }
     },
     {
@@ -396,10 +615,10 @@
       },
       "recency": {
         "recent_rate": 0.3888888888888889,
-        "prior_rate": 0.4,
+        "prior_rate": 0.5,
         "delta_pp": null,
         "n_recent": 18,
-        "n_prior": 5,
+        "n_prior": 4,
         "sufficient_n": false
       },
       "early_failure_share": 0.38095238095238093,
@@ -465,6 +684,35 @@
         "Product stopped working after one month and caused issues with house power.",
         "Vacuum cleaner failed to start after minimal use; customer frustrated with product reliability."
       ],
+      "failure_cluster": {
+        "type": "thermal_failure",
+        "name": "thermal failure",
+        "narrative": "thermal failure",
+        "n_matches": 14,
+        "share_of_complaints": 0.3111111111111111,
+        "median_ttf_days": 210,
+        "n_with_ttf": 7,
+        "early_share": 0.42857142857142855,
+        "top_components": [
+          {
+            "value": "cord",
+            "count": 4
+          },
+          {
+            "value": "roller drive belt",
+            "count": 1
+          },
+          {
+            "value": "second roller",
+            "count": 1
+          }
+        ],
+        "representative_quotes": [
+          "Burning smell and melted components due to roller drive belt failure after 18 months of use.",
+          "Design flaw prevents cleaning of second roller, causing jams and belt damage.",
+          "Vacuum is top-heavy and hard to maneuver; excessive suction power can lift rugs."
+        ]
+      },
       "risk": {
         "score": 0.42122594893029675,
         "components": {
@@ -473,7 +721,51 @@
           "safety_share": 0.4444444444444444,
           "recency_trend": 0.0,
           "early_failure_share": 0.38095238095238093
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.14852753623188406,
+          "severity_score": 0.12666666666666668,
+          "safety_share": 0.08888888888888889,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.057142857142857134
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.4950917874396135,
+            "weight": 0.3,
+            "contribution": 0.14852753623188406,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6333333333333333,
+            "weight": 0.2,
+            "contribution": 0.12666666666666668,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.4444444444444444,
+            "weight": 0.2,
+            "contribution": 0.08888888888888889,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.38095238095238093,
+            "weight": 0.15,
+            "contribution": 0.057142857142857134,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -581,6 +873,35 @@
         "Vacuum stopped working after minimal use; battery won't recharge.",
         "Vacuum quit working after one use; battery failure and clogging issues reported."
       ],
+      "failure_cluster": {
+        "type": "structural_break",
+        "name": "structural breakage",
+        "narrative": "physical breakage",
+        "n_matches": 17,
+        "share_of_complaints": 0.16346153846153846,
+        "median_ttf_days": 35,
+        "n_with_ttf": 11,
+        "early_share": 0.5454545454545454,
+        "top_components": [
+          {
+            "value": "hinge",
+            "count": 3
+          },
+          {
+            "value": "folding mechanism",
+            "count": 2
+          },
+          {
+            "value": "wand",
+            "count": 2
+          }
+        ],
+        "representative_quotes": [
+          "Vacuum design is top-heavy, affecting usability and performance; battery life is shorter than expected.",
+          "Hinge on foldable wand broke after 6 months, impacting usability; warranty service experience was unsatisfactory.",
+          "Folding mechanism broke after five uses; customer cites poor design."
+        ]
+      },
       "risk": {
         "score": 0.4058370382382233,
         "components": {
@@ -589,7 +910,51 @@
           "safety_share": 0.0,
           "recency_trend": 0.344068706387547,
           "early_failure_share": 0.3939393939393939
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.17475120780456682,
+          "severity_score": 0.12038461538461538,
+          "safety_share": 0.0,
+          "recency_trend": 0.05161030595813205,
+          "early_failure_share": 0.05909090909090908
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.5825040260152228,
+            "weight": 0.3,
+            "contribution": 0.17475120780456682,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6019230769230769,
+            "weight": 0.2,
+            "contribution": 0.12038461538461538,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.3939393939393939,
+            "weight": 0.15,
+            "contribution": 0.05909090909090908,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.344068706387547,
+            "weight": 0.15,
+            "contribution": 0.05161030595813205,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0,
+            "data_available": true
+          }
+        ]
       }
     },
     {
@@ -696,6 +1061,35 @@
         "Coffee maker malfunctioned after six months, causing brewing issues and requiring a replacement base unit.",
         "Coffee machine exploded coffee out of the side after a year and a half of use; deemed unusable."
       ],
+      "failure_cluster": {
+        "type": "thermal_failure",
+        "name": "thermal failure",
+        "narrative": "thermal failure",
+        "n_matches": 13,
+        "share_of_complaints": 0.24528301886792453,
+        "median_ttf_days": 180,
+        "n_with_ttf": 8,
+        "early_share": 0.375,
+        "top_components": [
+          {
+            "value": "coffee machine",
+            "count": 2
+          },
+          {
+            "value": "tray",
+            "count": 1
+          },
+          {
+            "value": "water reservoir",
+            "count": 1
+          }
+        ],
+        "representative_quotes": [
+          "Coffee maker has a safety issue with the tray design that can cause spills of hot coffee.",
+          "Water leaking from under the machine; customer experienced significant issues with the water reservoir.",
+          "Received machine with water in the tank and a soaked manual, but overall performance is great."
+        ]
+      },
       "risk": {
         "score": 0.3974208687129114,
         "components": {
@@ -704,7 +1098,51 @@
           "safety_share": 0.22641509433962265,
           "recency_trend": 0.0,
           "early_failure_share": 0.5652173913043478
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.14094014680971204,
+          "severity_score": 0.12641509433962264,
+          "safety_share": 0.04528301886792453,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.08478260869565217
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.46980048936570684,
+            "weight": 0.3,
+            "contribution": 0.14094014680971204,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6320754716981132,
+            "weight": 0.2,
+            "contribution": 0.12641509433962264,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.5652173913043478,
+            "weight": 0.15,
+            "contribution": 0.08478260869565217,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.22641509433962265,
+            "weight": 0.2,
+            "contribution": 0.04528301886792453,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": true
+          }
+        ]
       }
     },
     {
@@ -812,6 +1250,35 @@
         "Handle snapped after 15 months of use, rendering vacuum useless.",
         "Vacuum base separated from body after 8 months of infrequent use, indicating a durability issue."
       ],
+      "failure_cluster": {
+        "type": "structural_break",
+        "name": "structural breakage",
+        "narrative": "physical breakage",
+        "n_matches": 51,
+        "share_of_complaints": 0.3923076923076923,
+        "median_ttf_days": 210,
+        "n_with_ttf": 35,
+        "early_share": 0.22857142857142856,
+        "top_components": [
+          {
+            "value": "handle",
+            "count": 12
+          },
+          {
+            "value": "wand",
+            "count": 4
+          },
+          {
+            "value": "clip",
+            "count": 2
+          }
+        ],
+        "representative_quotes": [
+          "Customer praises vacuum's performance but notes design flaw with non-removable mesh filter affecting suction.",
+          "Plastic section broke after one year of regular use; design issue with handle placement.",
+          "Vacuum design causes tipping over and uncomfortable handle, unsuitable for frequent use."
+        ]
+      },
       "risk": {
         "score": 0.3861449884870937,
         "components": {
@@ -820,7 +1287,51 @@
           "safety_share": 0.0,
           "recency_trend": 0.0,
           "early_failure_share": 0.25
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.23218345002555527,
+          "severity_score": 0.11646153846153845,
+          "safety_share": 0.0,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.0375
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.7739448334185176,
+            "weight": 0.3,
+            "contribution": 0.23218345002555527,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.5823076923076922,
+            "weight": 0.2,
+            "contribution": 0.11646153846153845,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.25,
+            "weight": 0.15,
+            "contribution": 0.0375,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.0,
+            "weight": 0.2,
+            "contribution": 0.0,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -928,6 +1439,35 @@
         "Product stopped working; warranty issues with Shark and Amazon reported.",
         "Robot vacuum malfunctioned after four months, only goes in circles and fails to operate correctly."
       ],
+      "failure_cluster": {
+        "type": "performance_drop",
+        "name": "performance degradation",
+        "narrative": "performance degradation",
+        "n_matches": 23,
+        "share_of_complaints": 0.1419753086419753,
+        "median_ttf_days": 30,
+        "n_with_ttf": 5,
+        "early_share": 0.6,
+        "top_components": [
+          {
+            "value": "mapping",
+            "count": 2
+          },
+          {
+            "value": "dustbin",
+            "count": 2
+          },
+          {
+            "value": "brush",
+            "count": 2
+          }
+        ],
+        "representative_quotes": [
+          "Mapping performance initially poor but improved; overall positive experience with vacuum's cleaning capabilities.",
+          "Self-cleaning brush roll does not perform as expected, particularly with long hair.",
+          "Dustbin fails to empty properly, causing operational errors and frustration during cleaning cycles."
+        ]
+      },
       "risk": {
         "score": 0.3772393082875539,
         "components": {
@@ -936,7 +1476,51 @@
           "safety_share": 0.024691358024691357,
           "recency_trend": 0.0,
           "early_failure_share": 0.3684210526315789
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.1970378787878788,
+          "severity_score": 0.12,
+          "safety_share": 0.0049382716049382715,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.05526315789473684
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.6567929292929293,
+            "weight": 0.3,
+            "contribution": 0.1970378787878788,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6,
+            "weight": 0.2,
+            "contribution": 0.12,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.3684210526315789,
+            "weight": 0.15,
+            "contribution": 0.05526315789473684,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.024691358024691357,
+            "weight": 0.2,
+            "contribution": 0.0049382716049382715,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -975,10 +1559,10 @@
       },
       "recency": {
         "recent_rate": 0.3333333333333333,
-        "prior_rate": 0.4,
+        "prior_rate": 0.34782608695652173,
         "delta_pp": null,
         "n_recent": 12,
-        "n_prior": 25,
+        "n_prior": 23,
         "sufficient_n": false
       },
       "early_failure_share": 0.41346153846153844,
@@ -1044,6 +1628,35 @@
         "Lid failure prevents blender from turning on; customer unable to use product.",
         "Jar developed cracks after one year of use, making it unusable due to leaks."
       ],
+      "failure_cluster": {
+        "type": "structural_break",
+        "name": "structural breakage",
+        "narrative": "physical breakage",
+        "n_matches": 98,
+        "share_of_complaints": 0.6282051282051282,
+        "median_ttf_days": 120,
+        "n_with_ttf": 81,
+        "early_share": 0.30864197530864196,
+        "top_components": [
+          {
+            "value": "pitcher",
+            "count": 37
+          },
+          {
+            "value": "blender",
+            "count": 8
+          },
+          {
+            "value": "jar",
+            "count": 6
+          }
+        ],
+        "representative_quotes": [
+          "A piece of plastic broke off after a year and a half, making the blender unusable.",
+          "Top malfunctioned and broke after a year and a half of normal use.",
+          "Plastic pitcher developed hairline cracks and leaks after multiple washes, indicating durability issues."
+        ]
+      },
       "risk": {
         "score": 0.3733106934731935,
         "components": {
@@ -1052,7 +1665,51 @@
           "safety_share": 0.1794871794871795,
           "recency_trend": 0.0,
           "early_failure_share": 0.41346153846153844
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.13424018065268067,
+          "severity_score": 0.14115384615384616,
+          "safety_share": 0.0358974358974359,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.062019230769230764
+        },
+        "sorted": [
+          {
+            "name": "severity_score",
+            "component": 0.7057692307692307,
+            "weight": 0.2,
+            "contribution": 0.14115384615384616,
+            "data_available": true
+          },
+          {
+            "name": "true_complaint_rate",
+            "component": 0.4474672688422689,
+            "weight": 0.3,
+            "contribution": 0.13424018065268067,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.41346153846153844,
+            "weight": 0.15,
+            "contribution": 0.062019230769230764,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.1794871794871795,
+            "weight": 0.2,
+            "contribution": 0.0358974358974359,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     },
     {
@@ -1089,11 +1746,11 @@
         "n_complaints": 95
       },
       "recency": {
-        "recent_rate": 0.3333333333333333,
-        "prior_rate": 1.0,
+        "recent_rate": 0.4,
+        "prior_rate": 0.6666666666666666,
         "delta_pp": null,
-        "n_recent": 6,
-        "n_prior": 2,
+        "n_recent": 5,
+        "n_prior": 3,
         "sufficient_n": false
       },
       "early_failure_share": 0.2916666666666667,
@@ -1159,6 +1816,35 @@
         "Product failed to heat up and release steam, rendering it unusable.",
         "Product arrived without required cleaning pads, rendering it unusable."
       ],
+      "failure_cluster": {
+        "type": "structural_break",
+        "name": "structural breakage",
+        "narrative": "physical breakage",
+        "n_matches": 19,
+        "share_of_complaints": 0.2,
+        "median_ttf_days": 300,
+        "n_with_ttf": 9,
+        "early_share": 0.0,
+        "top_components": [
+          {
+            "value": "handle",
+            "count": 7
+          },
+          {
+            "value": "steam mop",
+            "count": 1
+          },
+          {
+            "value": "handles",
+            "count": 1
+          }
+        ],
+        "representative_quotes": [
+          "Steam mop lasted four years before failing; customer plans to purchase another.",
+          "Handle broke after a few months of normal use; replacement parts are unavailable.",
+          "Handle design causes uncomfortable pumping action during use, leading to return."
+        ]
+      },
       "risk": {
         "score": 0.3495530895420369,
         "components": {
@@ -1167,7 +1853,51 @@
           "safety_share": 0.12631578947368421,
           "recency_trend": 0.0,
           "early_failure_share": 0.2916666666666667
-        }
+        },
+        "contributions": {
+          "true_complaint_rate": 0.1506451948051948,
+          "severity_score": 0.12989473684210526,
+          "safety_share": 0.025263157894736845,
+          "recency_trend": 0.0,
+          "early_failure_share": 0.043750000000000004
+        },
+        "sorted": [
+          {
+            "name": "true_complaint_rate",
+            "component": 0.5021506493506493,
+            "weight": 0.3,
+            "contribution": 0.1506451948051948,
+            "data_available": true
+          },
+          {
+            "name": "severity_score",
+            "component": 0.6494736842105263,
+            "weight": 0.2,
+            "contribution": 0.12989473684210526,
+            "data_available": true
+          },
+          {
+            "name": "early_failure_share",
+            "component": 0.2916666666666667,
+            "weight": 0.15,
+            "contribution": 0.043750000000000004,
+            "data_available": true
+          },
+          {
+            "name": "safety_share",
+            "component": 0.12631578947368421,
+            "weight": 0.2,
+            "contribution": 0.025263157894736845,
+            "data_available": true
+          },
+          {
+            "name": "recency_trend",
+            "component": 0.0,
+            "weight": 0.15,
+            "contribution": 0.0,
+            "data_available": false
+          }
+        ]
       }
     }
   ]
