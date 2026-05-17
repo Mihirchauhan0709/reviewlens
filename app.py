@@ -47,14 +47,14 @@ st.set_page_config(
 
 # Tiny CSS polish. Streamlit defaults look like a homework assignment;
 # tightening the spacing + a single accent color makes it look intentional.
-# Color palette is SharkNinja's brand red (Apple Blossom) for emphasis.
+# Color story matches SharkNinja's careers site: deep teal accent on near-black.
 st.markdown("""
 <style>
     .block-container { padding-top: 2rem; padding-bottom: 3rem; }
     h1 { padding-bottom: 0; }
     .highlight-card {
-        background: rgba(176, 73, 73, 0.10);
-        border-left: 4px solid #B04949;
+        background: rgba(0, 191, 179, 0.08);
+        border-left: 4px solid #00BFB3;
         padding: 1.25rem 1.5rem;
         border-radius: 4px;
         margin-bottom: 1.5rem;
@@ -71,14 +71,19 @@ st.markdown("""
 
 
 # --- chart styling --------------------------------------------------------
-# SharkNinja brand palette (from official brand guidelines via Brandfetch).
-# Apple Blossom red is the brand accent; Cod Gray is the dark surface;
-# White is the light text. We use a muted neutral for non-priority data
-# so the brand red carries the priority signal.
-ACCENT_RED  = "#B04949"        # Apple Blossom — SharkNinja brand red
-ACCENT_DARK = "#141414"        # Cod Gray — SharkNinja brand dark
+# Palette matches SharkNinja's careers-site visual identity:
+# deep teal as the primary brand accent, pure black surfaces, bright pink
+# as a secondary accent. The teal is what they use in their CTAs and section
+# fills on careers.sharkninja.com.
+ACCENT_TEAL = "#00BFB3"        # SharkNinja careers-site primary teal
+ACCENT_PINK = "#FF6B7A"        # secondary pop color (used sparingly)
+ACCENT_DARK = "#0A0A0A"        # near-black surface
 ACCENT_GREY = "#8a8a8a"        # neutral for non-priority data
-GRID_COLOR  = "rgba(255, 255, 255, 0.08)"
+
+# Legacy alias so existing references in app.py still work, but everything
+# now points at the brand teal.
+ACCENT_RED = ACCENT_TEAL
+GRID_COLOR = "rgba(255, 255, 255, 0.08)"
 
 
 def style_chart(fig: go.Figure, height: int = 300, show_legend: bool = False) -> go.Figure:
@@ -422,7 +427,7 @@ elif page == "SKU Deep Dive":
             orientation="h",
             marker=dict(
                 color=decomp_df["Contribution"],
-                colorscale=[[0, "#d49090"], [1, ACCENT_RED]],
+                colorscale=[[0, "#7AD9D3"], [1, ACCENT_TEAL]],
                 line=dict(width=0),
             ),
             customdata=decomp_df[["Value", "Weight"]].values,
@@ -514,11 +519,13 @@ elif page == "SKU Deep Dive":
             for s in order if sev_counts.get(s, 0) > 0
         ]
         sev_df = pd.DataFrame(sev_data)
-        # Graduated brand-aligned palette: critical = deepest, low = neutral
+        # Severity gradient uses the brand's pink accent for critical/high,
+        # decaying to neutral for low. This keeps the teal pure as the
+        # "brand priority" signal and pink as the "warning" signal.
         severity_colors = {
-            "critical": "#7a2828",     # deep brand red
-            "high":     "#B04949",     # Apple Blossom (SharkNinja brand red)
-            "medium":   "#d49090",     # muted brand red
+            "critical": "#E63946",     # deep coral/red
+            "high":     "#FF6B7A",     # SharkNinja careers-site pink accent
+            "medium":   "#FFA8B0",     # muted pink
             "low":      "#8a8a8a",     # neutral grey
         }
         fig = px.bar(
@@ -556,9 +563,9 @@ elif page == "SKU Deep Dive":
                 x=rolling_pct.index,
                 y=rolling_pct.values,
                 mode="lines",
-                line=dict(color=ACCENT_RED, width=2.5),
+                line=dict(color=ACCENT_TEAL, width=2.5),
                 fill="tozeroy",
-                fillcolor="rgba(176, 73, 73, 0.15)",
+                fillcolor="rgba(0, 191, 179, 0.15)",
                 hovertemplate="<b>%{x|%b %d, %Y}</b><br>%{y:.1f}% complaint rate<extra></extra>",
                 name="",
             ))
