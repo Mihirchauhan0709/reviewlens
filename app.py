@@ -305,7 +305,7 @@ if page == "Executive Summary":
             "Safety share": "{:.1%}",
             "Trend (pp)":   lambda v: f"{v:+.1f}" if pd.notna(v) else "—",
             "Risk score":   "{:.3f}",
-        }).background_gradient(subset=["Risk score"], cmap="Reds"),
+        }),
         width="stretch",
         hide_index=True,
     )
