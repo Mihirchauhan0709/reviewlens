@@ -2,8 +2,7 @@
 
 > An AI-powered quality intelligence pipeline that surfaces emerging product defect signals from customer reviews — built as a working prototype for what an Applied AI co-op project at a consumer products company might look like.
 
-**Live dashboard:** [link after Streamlit Cloud deploy]
-**Demo video:** [2-min Loom link]
+**Live dashboard:** https://mihir-reviewlens.streamlit.app/
 
 ---
 
